@@ -31,10 +31,6 @@ public class HedgeMazes
 	static ArrayList<Edge> graph[];
 	static int myComp[];
 	static int dfs_low[];
-	static int COMPS = 0;
-	static int size[];
-	static boolean seen[];
-	static boolean isBridge[];
 	static int dfs_num[];
 	static int time = 0;
 	static DSU dsu;
@@ -53,44 +49,14 @@ public class HedgeMazes
 				dfs_low[u] = Math.min(dfs_low[u],dfs_low[e.to]);
 				if(dfs_low[e.to]  > dfs_num[u])
 				{
-					isBridge[e.id] = true;
+					dsu.union(e.to, u);
 				}
 
 			}
 			else if(e. to != p) dfs_low[u] = Math.min(dfs_low[u], dfs_num[e.to]);
 		}
 	}
-	public static void bfs(int u)
-	{
-		if(seen[u]) return;
-		int currentComp = COMPS++;
-		Queue<Integer> Q = new LinkedList();
-		Q.add(u);
-		while(!Q.isEmpty())
-		{
-			Integer v = Q.poll();
-			if(seen[v]) continue;
-			seen[v] = true;
-			myComp[v] = currentComp;
-			size[myComp[v]]++;
-			for(Edge e : graph[v])
-			{
-				if(isBridge[e.id])
-				{
-					// bridge
-					if(!seen[e.to])
-						bfs(e.to);
-					//System.err.println(myComp[v]+" "+myComp[e.to]);
-					dsu.union(v, e.to);
-					
-				}
-				else if(!seen[e.to]) Q.add(e.to);
-			}
 
-
-		}
-	}
-	
 	static int n,e,q;
 	
 	public static void main(String[]args)throws Throwable
@@ -105,12 +71,10 @@ public class HedgeMazes
 			graph = new ArrayList[n];
 			dfs_num = new int[n];
 			dfs_low = new int[n];
-			seen = new boolean[n];
-			isBridge = new boolean[e];
-			size = new int[n];
+			
 			myComp = new int[n];
 
-			COMPS = 0;
+			
 			dsu = new DSU(n);
 			
 			time = 0;
@@ -133,11 +97,7 @@ public class HedgeMazes
 				if(dfs_num[i] == -1)
 					dfs(i,-1);
 			}
-			for(int i = 0 ; i < n ; ++i)
-			{
-				if(!seen[i])
-					bfs(i);
-			}
+			
 			for(int j = 0 ; j < q ; ++j)
 			{
 				int u = sc.nextInt() - 1; int v = sc.nextInt() - 1;
