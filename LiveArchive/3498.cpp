@@ -34,6 +34,17 @@
 using namespace std;
 ll DP[1 << 11];
 
+//The problem can be thought of as follows. Given a permutation of N numbers. Find all possible grouping but none of the groups should be empty, and you may not use all numbers.
+//
+//For example a possible grouping for n = 4 is (4,3) (2) (1)
+//
+//Notice that N is small so you could enumerate all possible ways by DP.
+//
+//How to do so ? Use a bit-mask as your state where the ith bit is set to 0 if the ith number was used in a previous group.
+//
+//At every state, try all possible masks for a current group. If they are valid, meaning, all numbers are not used, and it is not empty, you recurse further.
+//
+//Base case when all numbers are used. ( Note since every group must be non-empty each time we use at least one number so our recursion must end).
 long long solve(int msk)
 {
 

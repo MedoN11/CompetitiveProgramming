@@ -35,6 +35,8 @@ using namespace std;
 ll DP[15];
 ll fac[15];
 
+//The first approach is easier to understand and code, but notice that you don’t care about which number is used, instead you worry about how many numbers can be used, so you could just do it by a dfs by keep tracking of “free” numbers and using factorials. The depth in this case will be at most n.
+
 ll nCk(int n,int k)
 {
 	return 1LL*(fac[n] / (fac[n - k] * fac[k]))*1LL;
