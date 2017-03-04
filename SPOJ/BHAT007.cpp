@@ -57,7 +57,7 @@ int add(int base,int *arr)
     }
     --n;
     
-    while(!arr[n])--n;
+    while(!arr[n--]);
     
     return n;
 }
