@@ -2,142 +2,106 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 
-public class Main
-{
+public class Main {
 
 
-	static class State implements Comparable<State>
+
+	public static void bad()
 	{
-		int i,j,ind,steps;
-
-		public State(int i,int j,int ind,int steps)
-		{
-			this.i = i; this.j = j; this.ind = ind; this.steps = steps;
-		}
-
-		@Override
-		public int compareTo(State o) 
-		{
-			return this.steps - o.steps;
-		}
+		System.out.println("Impossible");
+		System.exit(0);
 	}
-
-	static int N,M;
-	static char grid[][];
-	static int DP[][][] = new int[51][51][51];
-
-
-	static boolean valid(int i,int j)
+	public static long get(long x)
 	{
-		return i >= 0 && i < N && j >= 0 && j < M;
+		long lo = 0; long hi = x;
+		long ans = -1;
+		while(lo <= hi)
+		{
+			long mid = lo + (hi - lo) / 2L;
+
+			if(mid * (mid + 1) / 2 >= x)
+			{
+				ans = mid;
+				hi = mid - 1;
+			}
+			else lo = mid + 1;
+		}
+		if(ans * (ans + 1) / 2 != x)
+			bad();
+		return ans;
+
 	}
-	public static void main(String[]args)throws Throwable
+	
+	static void shot(long zeros,long ones,long a10,long a01)
 	{
-
+		if(zeros * ones != (a10 + a01))
+			return;
+		PrintWriter out = new PrintWriter(System.out);
+		if(ones + zeros == 0)
+			out.println(1);
+			
+		while(ones + zeros > 0)
+		{
+			if(a01 >= ones)
+			{
+				out.print(0);
+				a01 -= ones;
+				--zeros;
+			}
+			else
+			{
+				out.print(1);
+				a10 -= zeros;
+				--ones;
+			}
+		}
+	
+		out.flush();
+		out.close();
+		System.exit(0);
+	}
+	public static void main(String[] args) throws Throwable
+	{
 		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt(); M = sc.nextInt();
-		grid = new char[N][M];
-		int startI = - 1, startJ = -1;
-		int endI = -1, endJ = -1;
-		for(int i = 0 ; i < N ; ++i)
+		long a00,a01,a10,a11;
+		a00 = sc.nextLong(); a01 = sc.nextLong(); a10 = sc.nextLong(); a11 = sc.nextLong();
+		
+		
+		long zeros = get(a00);
+		long ones = get(a11);
+	
+		if(zeros != 0)
+			++zeros;
+		if(ones != 0)
+			++ones;
+		shot(zeros,ones,a10,a01);
+		if(zeros == 0)
 		{
-			String str = sc.next();
-			for(int j = 0 ; j < M ; ++j)
+			if(ones == 0)
 			{
-				grid[i][j] = str.charAt(j);
-				if(grid[i][j] == 'R')
-				{
-					startI = i; startJ = j;
-				}
-				if(grid[i][j] == 'E')
-				{
-					endI = i; endJ = j;
-				}
+				shot(1,1,a10,a01);
+				shot(1,0,a10,a01);
+				shot(0,1,a10,a01);
+				shot(0,0,a10,a01);
 			}
+			shot(0,ones,a10,a01);
+			shot(1,ones,a10,a01);
 		}
-		String command = sc.next();
-		for(int i = 0 ; i < 51 ; ++i)
-			for(int j = 0 ; j < 51 ; ++j)
-				Arrays.fill(DP[i][j], 1 << 30);
-		PriorityQueue<State> PQ = new PriorityQueue();
-		PQ.add(new State(startI,startJ,0,0));
-		DP[startI][startJ][0] = 0;
-		int min = 1 << 30;
-		char dir[] = {'U','D','L','R'};
-		while(!PQ.isEmpty())
+		if(ones == 0)
 		{
-			State curr = PQ.poll();
-			int i = curr.i; int j = curr.j; int ind = curr.ind;
-			if(DP[i][j][ind] < curr.steps)
-				continue;
-			if(i == endI && j == endJ)
-				min = Math.min(min, curr.steps);
-			// take the current step
-			if(ind < command.length())
-			{
-				int tmpI = i; int tmpJ = j;
-				if(command.charAt(ind) == 'U') --tmpI;
-				if(command.charAt(ind) == 'D') ++tmpI;
-				if(command.charAt(ind) == 'L') --tmpJ;
-				if(command.charAt(ind) == 'R') ++tmpJ;
-				if(!valid(tmpI,tmpJ) || grid[tmpI][tmpJ] == '#')
-				{
-					tmpI = i; tmpJ = j;
-					
-				}
-				if(DP[tmpI][tmpJ][ind + 1] > curr.steps)
-				{
-					DP[tmpI][tmpJ][ind + 1] = curr.steps;
-					PQ.add(new State(tmpI,tmpJ,ind + 1,curr.steps));
-				}
-
-			}
-
-
-			// modify by deleting
-			if(ind < command.length())
-			{
-				if(DP[i][j][ind + 1] > 1+ curr.steps)
-				{
-					DP[i][j][ind + 1] =1 + curr.steps;
-					PQ.add(new State(i,j,ind + 1,1 +curr.steps));
-				}
-			}
-
-			// modify by inserting
-			for(int k = 0 ; k < 4;  ++k)
-			{
-				char c = dir[k];
-				int tmpI = i; int tmpJ = j;
-				if(c == 'U') --tmpI;
-				if(c == 'D') ++tmpI;
-				if(c == 'L') --tmpJ;
-				if(c == 'R') ++tmpJ;
-
-				if(!valid(tmpI,tmpJ) || grid[tmpI][tmpJ] == '#')
-				{
-					continue;
-				}
-				if(DP[tmpI][tmpJ][ind] > curr.steps + 1)
-				{
-					DP[tmpI][tmpJ][ind] = curr.steps + 1;
-					PQ.add(new State(tmpI,tmpJ,ind,curr.steps + 1));
-				}
-
-
-			}
+			shot(zeros,0,a10,a01);
+			shot(zeros,1,a10,a01);
 		}
-
-		System.out.println(min);
-
+		
+		bad();
+		
 
 	}
-
 	static class Scanner
 	{
 		BufferedReader br;
@@ -148,14 +112,14 @@ public class Main
 
 		String next() throws IOException
 		{
+
 			while(st == null || !st.hasMoreTokens())
 				st = new StringTokenizer(br.readLine());
 			return st.nextToken();
 
 		}
 
-		int nextInt() throws NumberFormatException, IOException { return Integer.parseInt(next()); }
+		int nextLong() throws NumberFormatException, IOException { return Integer.parseInt(next()); }
 
 	}
-
 }
