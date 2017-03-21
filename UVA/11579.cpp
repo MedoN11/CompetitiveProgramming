@@ -67,6 +67,21 @@ using namespace std;
 int n;
 int t;
 vector<double> v;
+
+// sort, and try every 3 consecutive entries
+// why does that work?
+// check triangle inquality
+// let i <= j <= k <= f
+// assume i + j >= k
+// we are trying to prove that if there exists f > k such that i + j >= f
+// then j + k >= f..if we prove it suffices to try every 3 consecutive entries.
+// we know that f - k <= f - i (>>> 1)
+// from i + j >= f ..we can see j >= f - i (>>> 2)
+// from 1 and 2 we see j >= f - k
+// so we arrive at j + k >= f
+
+// to get triangle area we use hero's formula
+
 int main()
 {
 	scanf("%d",&t);;
@@ -98,9 +113,9 @@ int main()
 			}
 		}
 
-if(all == -1)
-		all = 0.00;
-	printf("%.2f\n",all);
+		if(all == -1)
+			all = 0.00;
+		printf("%.2f\n",all);
 	}
 
 }
