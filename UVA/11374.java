@@ -8,6 +8,10 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+// Modification in Dijikstra
+// We change our state to keep track if we used an express edge or not
+// at every state we try the finance ticket, and express if we didn’t use any express tickets
+// After that we print the path
 public class AirPortExpress 
 {
 
