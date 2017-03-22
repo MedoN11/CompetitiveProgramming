@@ -70,9 +70,15 @@ ll hi[4*MAXN];
 ll res[4*MAXN];
 ll pre[MAXN];
 
+// for each opening bracket we want to know how much area does it contribute
+// we can find the width easily by processing it’s closing bracket by a stack and getting distance in between..we process that in array to[i] which gives the index of it’s matched closed bracket
+// Now we need to know the height, we can solve that by DP.
+// Define DP[I] = 1 + max(DP[j]), i <= j <= to[i]
+// doing so would take O(N^2)
+// but we can do this in NlogN
 // build segment tree of prefix sums of the bracket sequence
-
-void upd(int ind)
+// then run Range maximum query
+// adding areas to white or black depends on parity of the nesting
 {
 	res[ind] = max(res[ind << 1],res[(ind << 1) + 1]);
 }
