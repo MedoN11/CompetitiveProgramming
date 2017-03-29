@@ -6,6 +6,9 @@ import java.util.TreeSet;
 public class HanoiTower 
 
 {
+//	The solution can be at most 19 so using this you can apply bruteforce from source state by using BFS,
+//	but going up to atmost depth 20. ( Since number of steps here is answer, it doesn't make sense to go beyond that) but this is too slow and will get TLE. 
+//			So you use meet in the middle, and run 2 BFS's each with depth up to 10 then combine them, and this fits in time.
 
 
 	static TreeMap<State,Integer> map = new TreeMap();
