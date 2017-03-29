@@ -7,9 +7,15 @@ import java.io.PrintWriter;
 import java.util.*;
 
 
+/*
+The idea is to bruteforce the placement of the N items on every row, coloumn, and the two main diagonals.
+The cost of the placement can be be solved quickly by min cost bipartite matching where edge costs are the distance between every 2 nodes
+To do this, we consturct a bipartite graph where the left group contains the N nodes in the input, and the other side contains the N cells of the chosen row/col/diag
+Then for each node on the left, we connect it with every node on the right where edge costs are the distance between them
+Obviously a perfect matching must exist, and our interest is the least cost to do so, which is min cost bipartite matching
+I implemented this with min cost max flow instead of hungarian.
+*/
 
-//The idea is to bruteforce the placement of the N items on every row, coloumn, and the two main diagonals.
-//The cost of the placement cane be solved quickly by min cost bipartite matching where edge costs are the distance between every 2 nodes
 
 public class TheGreatWallGame 
 {
