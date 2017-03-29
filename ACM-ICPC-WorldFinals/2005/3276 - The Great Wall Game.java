@@ -6,6 +6,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.*;
 
+
+
+//The idea is to bruteforce the placement of the N items on every row, coloumn, and the two main diagonals.
+//The cost of the placement cane be solved quickly by min cost bipartite matching where edge costs are the distance between every 2 nodes
+
 public class TheGreatWallGame 
 {
 
@@ -140,7 +145,7 @@ public class TheGreatWallGame
 	static int getCost(ArrayList<Pair> left,ArrayList<Pair> right)
 	{
 		//System.err.println(tmpid);
-		List<Edge>[] graph = createGraph(tmpid);
+		List<Edge>[] graph = createGraph(tmpid + tmpid);
 		for(Pair p1 : left)
 		{
 			addEdge(graph,source,p1.id,1,0);
@@ -153,7 +158,7 @@ public class TheGreatWallGame
 		{
 			addEdge(graph,p2.id,sink,1,0);
 		}
-		int ans[] = minCostFlow(graph,source,sink,10000);
+		int ans[] = minCostFlow(graph,source,sink,Integer.MAX_VALUE);
 	//	System.out.println(ans[0] +" "+ans[1]);
 		if(ans[0] == n)
 			return ans[1];
