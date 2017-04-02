@@ -70,7 +70,7 @@ using namespace std;
 // Here we can modify this to count numbers divisble by k along with their sums by taking the mod in each step.
 //
 // So now we have a solution that works in T*logN*K^2..with K being 10000 this is too much, but notice that the numbers at are most 2^31,
-// which means that the sum of theri digits cannot exceed 100, so for any K > 100, answer is indeed zero. For K < 100, we do the DP, since K in this case is at most 100, the DP will be fast enough.
+// which means that the sum of their digits cannot exceed 100, so for any K > 100, answer is indeed zero. For K < 100, we do the DP, since K in this case is at most 100, the DP will be fast enough.
 
 string a,b;
 int n;
