@@ -52,17 +52,16 @@ void backtrack(int ind)
 		return;
 
 	}
+	int empty = 0;
 	for(int i = 0 ; i < n ; ++i)
 	{
-		grp[i].push_back(v[ind]);
-		if(grp[i].size() <= cap)
-			backtrack(ind + 1);
-		grp[i].pop_back();
+		if(grp[i].size() == 0)
+			++empty;
 	}
 	for(int i = 0 ; i < n ; ++i)
 	{
 		grp[i].push_back(v[ind]);
-		if(grp[i].size() <= cap)
+		if(sz(v) - ind >= empty)
 			backtrack(ind + 1);
 		grp[i].pop_back();
 	}
