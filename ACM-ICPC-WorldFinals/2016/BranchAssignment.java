@@ -9,7 +9,18 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class BranchAssignment 
+
+/*
+
+ Calculate array which contains for every i < b
+ distance from i till hq and from hq till i
+ sort that array in desecnding order
+ it is always optimal when grouping to let larger values in smaller groups
+ so it is better to sort that way
+ problem then changes into a grouping problem
+ so we apply DP D & C to pass
+ */
+public class BranchAssignment
 {
 
 
@@ -79,7 +90,7 @@ public class BranchAssignment
 		if(i > j)
 			return 1L << 59;
 		return (pre[j] - (i == 0 ? 0 : pre[i - 1]))* (j - i);
-		
+
 	}
 
 	static int A[][];
@@ -149,16 +160,16 @@ public class BranchAssignment
 		for(int i = 0 ; i < b ; ++i)
 		{
 			DP[1][i] = cost(0,i,pre);
-			
+
 		}
 
-		
-	
+
+
 		for(int g = 2 ; g <= s ; ++g)
 		{
-			
+
 			fill(g,0,b - 1,0,b - 1,pre);
-			
+
 		}
 		System.out.println(DP[s][b - 1]);
 
