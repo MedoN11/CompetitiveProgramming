@@ -27,6 +27,15 @@ int revx[4100],revy[4100];
 int leftx[4101],rightx[4101],righty[4101];
 int lx,ly,rx,ry;
 int sizeX,sizeY;
+/*
+
+
+  Apply grid compression then DP.
+
+  Corner Case : When setting the bounds for x. Make sure to set a block [l,r] as l - 1 r in map
+  [l,r] would force leftmost compressed grid to visit it without escape
+
+ */
 bool solve(int i,int j)
 {
 	if(i > sizeX || j > sizeY || i < 0 || j < 0)
@@ -60,8 +69,7 @@ int main()
 		for(int  i = 0 ; i < w ; ++i)
 		{
 			scanf("%d %d %d %d",&lx,&ly,&rx,&ry);
-			mpx[lx] = 1; mpy[ly] = 1;
-			++lx; ++ ly; ++rx; ++ry;
+			++rx; ++ry;
 			mpx[lx] = 1; mpx[rx] = 1; mpy[ly] = 1; mpy[ry] = 1;
 			leftx[i] = lx; rightx[i] = rx; righty[i] = ry;
 
@@ -88,7 +96,7 @@ int main()
 		for(int i = 0 ; i < w ; ++i)
 		{
 			int l = mpx[leftx[i]]; int r = mpx[rightx[i]]; int y = mpy[righty[i]];
-			for(int j = l ; j <= r ;++j)
+			for(int j = l + 1 ; j <= r ;++j)
 				grid[j][y] = 1;
 		}
 		ll ret = 0;
