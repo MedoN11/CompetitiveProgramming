@@ -28,6 +28,14 @@ int grid[5001][5001];
 int n,m,b,q;
 typedef pair<int,int> ii;
 map<ii,ii> mp;
+
+// The idea to solve this problem that it is possibe to map the cordinate system
+// (x,y) into (x+ y,x - y). If you think of it as a function it is one to one
+// Once that is done the manhattan distance becomes max(abs(x2 - x1),abs(y2 - y1))
+// So after transforming the points, the problems becomes finding a square of side length 2d such that it contains
+// maximum number of shops
+// More details including correctness of the transformation, and the new manhattan distance formula
+// can be found here : http://apps.topcoder.com/wiki/display/tc/SRM+577 (
 void rotate(int &x,int &y)
 {
 	int a = x, b = y;
@@ -106,6 +114,3 @@ cout <<"Case " <<(tc)<<":\n";
 	}
 
 }
-
-
-
