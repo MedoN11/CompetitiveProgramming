@@ -31,6 +31,12 @@ typedef vector<int> vi;
 double EPS = 1e-9;
 typedef pair<double, double> point;
 
+// Get convex hull of points
+// then for each vertex of this polygon
+// distance to others ( in cw or ccw ) will be increasing then decreasing
+// since there are no common points, maximum value will not be repeated
+// so we can apply ternary search
+// since it's on integers we can do it that way.
 bool cw(const point &a, const point &b, const point &c) {
 	return (b.first - a.first) * (c.second - a.second) - (b.second - a.second) * (c.first - a.first) < 0;
 }
@@ -122,5 +128,3 @@ int main()
 	}
 
 }
-
-
