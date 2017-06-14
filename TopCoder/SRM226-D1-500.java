@@ -1,9 +1,9 @@
 import java.util.StringTokenizer;
 
-public class OneArmedBandit 
+public class OneArmedBandit
 {
 
-	
+
 	public static double calc(String pat,String[] wheel)
 	{
 		double prob = 1.0;
@@ -21,7 +21,7 @@ public class OneArmedBandit
 		}
 		return prob;
 	}
-	
+
 	public static void main(String[]args)throws Throwable
 	{
 		String wheel[] = {"ABC", "ABC", "ABC"};
@@ -29,7 +29,7 @@ public class OneArmedBandit
 		String pay[] = {"AA- 5", "A-- 2"};
 		System.out.println(progressiveJackpot(wheel, str, pay));
 	}
-	
+
 	public static double progressiveJackpot(String w[],String jackpot,String payoff[])
 	{
 		StringTokenizer st;
@@ -41,13 +41,14 @@ public class OneArmedBandit
 			int ben = new Integer(st.nextToken());
 			ans += calc(pat,w) * ben;
 		}
-		
+
 		double other = 1 - ans;
 		other /= calc(jackpot,w);
+		if(other < 0.0)
+			return 0.0;
 		if(calc(jackpot,w) == 0)
-			return 0;
-//		if(other < 0.0)
-//			return 0.0;
+			return -1.0;
+
 		return other;
 	}
 }
