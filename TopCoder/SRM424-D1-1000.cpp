@@ -27,6 +27,8 @@ using namespace std;
 #define REP(i, v)       for(int i=0;i<sz(v);i++)
 #define fast {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);}
 
+// BIT + Math
+// Editorial is detailed :)
 struct ProductOfPrices
 {
 	int product(int n,int l,int x0,int a,int b);
