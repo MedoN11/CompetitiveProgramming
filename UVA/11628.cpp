@@ -29,6 +29,11 @@ using namespace std;
 int n,m;
 vector<ll> v;
  ll gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
+// Probability + math
+ // summation of powers of two from 1 to n is 2^(n + 1) - 1
+ //2^(n + 1) > 2^(n + 1) - 1
+ // so the probability is determined only by the last round
+ // now turns to a simple probability problem
 int main()
 {
 	fast

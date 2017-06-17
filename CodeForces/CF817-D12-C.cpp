@@ -28,6 +28,9 @@ using namespace std;
 #define fast {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);}
 ll n,s;
 
+// Math + Binary Search
+// if x is a really big number then so is x + 1
+// so we just binary search for least number, and subtract n from that
 int main()
 {
 	scanf("%lld %lld",&n,&s);

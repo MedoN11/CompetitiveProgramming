@@ -31,6 +31,11 @@ char grid[501][501];
 int n,m,k;
 int dx[4] = {0,0,1,-1};
 int dy[4] = {1,-1,0,0};
+
+// Bruteforce + DP Matrix Sum + Binary/2Pointers
+// A rectangle is defined by (x1,y1) and (x2,y2)
+// Let's fix x1 and x2
+// we can then solve for y1 and y2 using binary search or 2 poitners.
 inline bool ok(int i,int j)
 {
 	return i >= 0 && i < n && j >= 0  && j < m;

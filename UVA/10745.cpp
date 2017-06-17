@@ -29,7 +29,9 @@ using namespace std;
 #define fast {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);}
 vector<pair<string,int> > v;
 int n;
-
+// Bruteforce
+// If we break as soon as we can it sounds fast enough as N <= 15000
+// now let's random shuffle, and we can avoid badly constructed cases.
 bool dominates(string &a,string &b)
 {
 	int i = 0, j = 0;

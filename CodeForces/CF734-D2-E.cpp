@@ -31,6 +31,10 @@ vector<int> tree[maxn];
 vector<int> comp[maxn];
 int dad[maxn];
 
+// Tree compression + Diameter
+// Compress the tree based on colors by DSU
+// the answer is (diameter + 1) / 2
+// proof is in the CF Editorial
 pair<int,int> bfs(int u)
 																		{
 

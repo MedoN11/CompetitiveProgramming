@@ -30,6 +30,11 @@ int a,b,k;
 const int maxn = 1000*1005;
 int arr[maxn];
 int n;
+// Math + adhoc
+// Google how to compute digital root of a number
+// it has something to do with it's value % based
+// based on that we can reduce the problem to counting subarrays with certain sum
+// it's a standard problem that can be solved using a map.
 int main()
 {
 	scanf("%d %d %d",&k,&b,&n);
