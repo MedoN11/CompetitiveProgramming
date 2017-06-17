@@ -25,91 +25,99 @@ using namespace std;
 #define ll long long
 #define sz(v)               ((int)((v).size()))
 #define REP(i, v)       for(int i=0;i<sz(v);i++)
-#define fast {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);}
-const int maxn = 2000*1005;
-vector<int> tree[maxn];
-vector<int> comp[maxn];
-int dad[maxn];
-
-pair<int,int> bfs(int u)
-																		{
-
-	queue<pair<int,pair<int,int> > > Q; Q.push(make_pair(u,make_pair(0,-1)));
-	int max_distance = 0; int t = u;
-	while(!Q.empty())
-	{
-		pair<int,pair<int,int> > out = Q.front(); Q.pop();
-		int idx = out.first; int dis = out.second.first; int p = out.second.second;
-
-		if(max_distance <= dis){
-			t = idx;
-			max_distance  = dis;
-		}
-		REP(k,tree[idx])
-		{
-			int next = tree[idx][k]; if(next==p)continue;
-			if(p==next) continue;
-			Q.push(make_pair(next,make_pair(dis+1,idx)));
-		}
-
-
-	}
-	return make_pair(t,max_distance);
-																		}
-
-int getDiameter(int idx)
+typedef pair<int,int> ii;
+int DP[501][501];
+char grid[501][501];
+int n,m,k;
+int dx[4] = {0,0,1,-1};
+int dy[4] = {1,-1,0,0};
+inline bool ok(int i,int j)
 {
+	return i >= 0 && i < n && j >= 0  && j < m;
+}
+inline int query(int x1,int x2,int y1,int y2)
+{
+	if(x1 > x2)
+		return 0;
+	if(y2 < y1)
+		return 0;
+	int sum = DP[x2][y2];
+	if(y1 > 0) sum -= DP[x2][y1 - 1];
+	if(x1 > 0) sum -= DP[x1 - 1][y2];
+	if(x1 > 0 && y1 > 0) sum += DP[x1 - 1][y1 - 1];
 
-	int path = 0;
-
-
-	pair<int,int> u = bfs(idx);
-	pair<int,int> v = bfs(u.first);
-	path = max(v.second,path);
-
-	return path;
+	return sum;
 }
 
-void merge(int x,int y)
+
+
+inline bool can(int up,int down,int colL,int colR)
 {
-	if(dad[x] == dad[y])
-		return;
-	int u = dad[x], v = dad[y];
-	if(sz(comp[u]) < sz(comp[v]))
-		swap(u,v);
-	REP(i,comp[v]) comp[u].push_back(comp[v][i]),dad[comp[v][i]] = u;
+
+	return query(up + 1,down - 1,colL + 1,colR - 1) >= k;
 }
-int n;
-int col[maxn];
-vector<pair<int,int> > edges;
+
+
 int main()
 {
-	scanf("%d",&n);
-	for(int i = 0 ; i < n ; ++i) comp[i].push_back(i),dad[i] = i;
+
+	scanf("%d %d %d",&n,&m,&k);
+	for(int i = 0 ; i  < n ; ++i)
+	{
+		scanf("%s",grid[i]);
+	}
+
 	for(int i = 0 ; i < n ; ++i)
 	{
-		scanf("%d",&col[i]);
-	}
-	for(int i = 0 ; i < (n - 1) ; ++i)
-	{
-		int x,y; scanf("%d %d",&x,&y);
-		--x; --y;
-		if(col[x] == col[y])
+		for(int j = 0 ; j < m ;++j)
 		{
-			//cerr << x << " " << y << "\n";
-			merge(x,y);
+			int stars = 0;
+			if(grid[i][j] == '1')
+			{
+				for(int k = 0 ; k < 4 ; ++k)
+				{
+					int xc = dx[k] + i;
+					int yc = dy[k] + j;
+					if(ok(xc,yc) && grid[xc][yc] == '1')
+					{
+						++stars;
+					}
+
+				}
+			}
+			if(stars == 4)
+			{
+				DP[i][j] = 1;
+			}
+			if(i > 0)
+				DP[i][j] += DP[i - 1][j];
+			if(j > 0)
+				DP[i][j] += DP[i][j - 1];
+			if(i > 0 && j > 0)
+				DP[i][j] -= DP[i - 1][j - 1];
 		}
-		edges.push_back(make_pair(x,y));
 	}
-	REP(i,edges)
+
+	ll ans = 0;
+	for(int i = 0 ; i < m ; ++i)
 	{
-		pair<int,int> e = edges[i];
-		int u = dad[e.first], v = dad[e.second];
-		if(u != v)
+		for(int j = i + 1; j < m ; ++j)
 		{
-			tree[u].push_back(v), tree[v].push_back(u);
+
+			int lo = 0, hi = 0;
+
+			while(lo < n && hi < n)
+			{
+				if(can(lo,hi,i,j))
+				{
+					ans += 1LL*n - hi;
+					++lo;
+				}
+				else ++hi;
+			}
+
+
 		}
 	}
-	int d = getDiameter(dad[0]);
-	printf("%d\n",(d + 1) / 2);
+	cout << ans;
 }
