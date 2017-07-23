@@ -51,6 +51,17 @@ typedef complex<double> point;
 #define lpi(i, j, n)  for(int i=(j);i<(int)(n);++i)
 #define lpd(i, j, n)  for(int i=(j);i>=(int)(n);--i)
 
+// Geometry Pick's theorm
+// On integral points between 2 points
+// let the slope between them be a / b = ( (y2 - y1) / (x2 - x1))
+// by definition of slope for every a in X, we must move b in Y
+// a and b must be integers in this case because we are dealing with lattice points
+// simplify the fraction a / b by getting gcd
+// this b is the minimum change we can do in Y while maintaining an integer change in X
+// the frequency we can move is b / gcd(a,b)
+// now how many points can we cover ? (b) / (b/gcd(a,b)) = gcd(a,b)
+// same can be derived from X
+
 int getCount(point p, point q)
 {
 
@@ -61,7 +72,8 @@ int getCount(point p, point q)
 	if (p.Y == q.Y)
 		return fabs(p.X-q.X) - 1;
 
-	return __gcd((int)abs(p.X-q.X), (int)abs(p.Y-q.Y))-1;
+	int g = __gcd((int)abs(p.X-q.X), (int)abs(p.Y-q.Y));
+	return  -1+(abs(p.Y - q.Y)) / (abs(p.Y-q.Y) / g); // or just return gcd..but it's an illustration for formula above
 }
 
 double polygonArea(vector<point>& points) {
@@ -73,7 +85,6 @@ typedef pair<int,int> pii;
 set<pii> s;
 int main()
 {
-	cerr <<getCount(point(5,0),point(3,1)) << "\n";
 	int t;
 	scanf("%d",&t);
 	int tc = 1;
