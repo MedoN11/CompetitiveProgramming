@@ -29,6 +29,7 @@ typedef pair<int,int> pii;
 typedef pair<int,pii> edge;
 int n;
 int t;
+// Modifictaion of floyd's algorithm
 vector<int> g[105];
 int floyd[105][105];
 void relax(int s,int t,int d)
