@@ -28,7 +28,7 @@ typedef long long ll;
 #define REP(i, v)       for(int i=0;i<sz(v);i++)
 int n,m;
 const int maxn = 1005000;
-
+// Adhoc Problem
 vector<int>  seq;
 int L[maxn],R[maxn];
 int tmp_dp[maxn];
