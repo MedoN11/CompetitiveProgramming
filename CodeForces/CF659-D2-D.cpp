@@ -30,6 +30,7 @@ int n,m;
 typedef pair<int,int> pii;
 const int maxn = 2*1005000;
 vector<pii>  v;
+// just a pattern
 int main()
 {
 	int n;
