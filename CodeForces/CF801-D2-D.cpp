@@ -29,6 +29,9 @@ using namespace std;
 using namespace std;
 typedef pair<int,int> pii;
 
+
+// Geometry
+// Point to distance
 const double PI  = acos(-1.0);
 double EPS = 1e-8;
 typedef complex<double> point;
