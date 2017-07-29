@@ -8,6 +8,15 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+// This is NOT my explanation. It's copied from a blog on CF, but my code uses same idea
+//  "Boring partition:
+// Sort the array in non-increasing order. Array size is n, numbering starts from 1. If we kept all the integers in the same subsequence, the answer would be (a[1] + a[2]) — (a[n-1] + a[n]), which is the difference between the maximal and minimal possible sums, respectively. To make the difference smaller, we need to either : decrease the maximal sum or increase the minimal sum. Since h >= 0, moving a number to another subsequence can only increase the sums. Hence it's impossible to decrease the current maximal sum, so we should try to increase the minimal sum. To do that, we should move the smallest element, a[n], to the other subsequence. Now, a few different scenarios can happen:
+// 1) Maximal sum remains a[1] + a[2], minimal sum becomes a[n-1] + a[n] + h, the difference becomes smaller (or equal, if h = 0).
+// 2) Maximal sum remains a[1] + a[2], minimal sum becomes a[n-2] + a[n-1], the difference becomes smaller (or equal, if a[n-2] = a[n]).
+// 3) Maximal sum becomes a[1] + a[n] + h, minimal sum becomes a[n-2] + a[n-1]. The difference can be larger, equal or smaller.
+// Moving more numbers to the other subsequence can't decrease the difference in any scenario. In conclusion, the answer is always either:
+// 1) Keep everything in the same subsequence.
+// 2) Keep everything in the same subsequence, except the smallest element." 
 public class BoringPartition
 {
 	static Integer n,h;
