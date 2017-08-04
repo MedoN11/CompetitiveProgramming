@@ -30,7 +30,7 @@ using namespace std;
 using namespace std;
 typedef pair<int,int> pii;
 int a,b;
-
+// implementation
 
 inline string rotateAcw(string &a)
 {
@@ -102,16 +102,9 @@ inline string rotateDccw(string &a)
 }
 #define fast std::ios_base::sync_with_stdio(false);
 
-map<ll,int> mp;
-
-ll base = 11;
+unordered_map<string,int> mpA(10000000);
+unordered_map<string,int> mpB;
 char s[12];
-ll getHash(string &a)
-{
-	ll h = 0;
-	REP(i,a) h *=11, h += a[i] - '0';
-	return h;
-}
 int main()
 {
 
@@ -119,15 +112,17 @@ int main()
 	int tc = 1;
 	queue<string> q;
 	q.push(str);
+	mpA.clear();
+	mpB.clear();
 	int ans = 1 << 30;
-	mp[getHash(str)] = 0;
+	mpA[str] = 0;
 	vector<string> nextStates;
 	while(!q.empty())
 	{
 		string p = q.front();q.pop();
 		//cerr << p << "\n";
-		int cost = mp[getHash(p)];
-		if(cost > 10)
+		int cost = mpA[p];
+		if(cost >= 10)
 			break;
 		nextStates.clear();
 		nextStates.pb(rotateAcw(p));
@@ -140,10 +135,9 @@ int main()
 		nextStates.pb(rotateDccw(p));
 		REP(i,nextStates)
 		{
-			ll h = getHash(nextStates[i]);
-			if(mp.find(h) == mp.end())
+			if(mpA.find(nextStates[i]) == mpA.end())
 			{
-				mp[h] = cost + 1;
+				mpA[nextStates[i]] = cost + 1;
 				q.push(nextStates[i]);
 			}
 		}
@@ -159,10 +153,10 @@ int main()
 		printf("%d. ",tc++);
 		int steps = str[0] - '0';
 		string t = str.substr(1,sz(str) - 1);
-		ll h = getHash(t);
-		if(mp.find(h) == mp.end())
+
+		if(mpA.find(t) == mpA.end())
 			ans = -1;
-		else ans = mp[h];
+		else ans = mpA[t];
 		if(ans > steps)
 			ans = -1;
 		printf("%d\n",ans);
