@@ -36,6 +36,7 @@ vector<edge> g[55];
 int dp[100005][52];
 int sink;
 bool onPath[2501];
+// floyd + DP
 int solve(int u,int rem)
 {
 	//cerr << u << " " << rem << "\n";

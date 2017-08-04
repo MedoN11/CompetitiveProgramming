@@ -29,7 +29,8 @@ using namespace std;
 using namespace std;
 typedef pair<int,int> pii;
 
-// Adhoc withe little greedy
+// Adhoc
+// 
 vector<int> sortArray(vector<int> v)
 		{
 
