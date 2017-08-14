@@ -26,7 +26,6 @@ using namespace std;
 #define all(x)          (x).begin(),(x).end()
 #define REP(i, v)       for(int i=0;i<sz(v);i++)
 typedef pair<int,int> pii;
-#define ios std::ios_base::sync_with_stdio(false);
 
 using namespace std;
 
