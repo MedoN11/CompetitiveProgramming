@@ -72,7 +72,7 @@ int main()
 	sort(all(intervals));
 	int res1 = greedyMatching();
 	//cerr << res1 << "\n";
-	for(int i = 0 ; i < n ;++i) cout << room[matching[i]].second << "\n";
+	//for(int i = 0 ; i < n ;++i) cout << room[matching[i]].second << "\n";
 	if(res1 != n)
 	{
 		puts("Let's search for another office.");
