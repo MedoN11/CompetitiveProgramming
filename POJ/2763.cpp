@@ -37,6 +37,8 @@ int in[maxn],out[maxn];
 int pr[maxn],dp[maxn][maxlog + 1],lvl[maxn];
 int tim = 1;
 int cost[maxn*2];
+
+ Root the tree at 0, and then for each edge from u to v, drop it's weight on v. Now for each query to update edge (u,v), treat it as updating weights on v. Now maintain a bit with range updates and point query on euler tour of the tree.
 void dfs(int u,int dep)
 {
 	lvl[u] = dep;
