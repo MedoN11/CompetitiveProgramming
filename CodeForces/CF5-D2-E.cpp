@@ -1,4 +1,3 @@
-→ Source
 #include <iostream>
 #include <cstdio>
 #include<list>
@@ -37,12 +36,15 @@ int main_dp[maxn];
 map<int,int> cord;
 int a[maxn];
 
-//Reduce the problem to a straight line instead of circularity by finding the maximum element, and rotating the sequence so that it’s first. Now add that element to the end. ( Trace few samples if you don’t see why this is correct modeling)
-//Now for all of the elements do a co-ordinate compression, and let’s calculate for each element the first element greater than it from left, and right. This is a standard problem that is solved by a stack.
+//Reduce the problem to a straight line instead of circularity by finding the maximum element, and rotating the sequence so that it’s first. 
+//Now add that element to the end. ( Trace few samples if you don’t see why this is correct modeling)
+//Now for all of the elements do a co-ordinate compression, and let’s calculate for each element 
+//the first element greater than it from left, and right.
+// This is a standard problem that is solved by a stack.
 //More details here : https://stackoverflow.com/questions/22542004/for-each-element-finding-the-closest-greater-element
 //.. again very standard you will find many information on google.
 //For maximum element handle it alone. Answer is easily frequency*(frequency-1)/2
-//Now maintain a dp for each sequence which contains how many elements equal to it are in the stack.
+//Now maintain a dp for each element of the sequence which contains how many elements equal to it are in the stack.
 // this is done by maintaining two dp arrays one which contains how many elements i are in the stack, and the other contains the answer for each index
 // simply when you pop an element decrements the tmp dp, and increment it when you push. That's why we did co-ordinate compression.
 //Now each element will contribute dp[i] + 2.
