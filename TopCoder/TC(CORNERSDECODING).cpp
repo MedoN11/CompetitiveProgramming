@@ -31,7 +31,9 @@ using namespace std;
 const bool debug = true;
 const int maxn = 100005;
 typedef pair<double, double> point;
+// Editorial : https://apps.topcoder.com/forums/?module=Thread&threadID=684537
 
+// Line Sweep
 struct CornersDecoding
 {
 	ll blackPixels(vector<int> rows,vector<int> cols);
