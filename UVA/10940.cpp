@@ -28,7 +28,7 @@ using namespace std;
 typedef pair<ll,ll> pii;
 #define ios std::ios_base::sync_with_stdio(false);
 using namespace std;
-int simulate(int n) {
+int brute(int n) {
 	stack<int> s;
 
 	for(int i = n ; i >= 1 ; --i) {
@@ -45,7 +45,7 @@ int simulate(int n) {
 	}
 	return s.top();
 }
-ll pow2[20];
+ll pow2[31];
 int solve(int n) {
 	if(n == 1)
 		return 1;
