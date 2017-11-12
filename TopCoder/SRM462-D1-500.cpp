@@ -30,6 +30,8 @@ typedef pair<pii,int> state;
 #define ios std::ios_base::sync_with_stdio(false);
 using namespace std;
 
+
+// Linearity of Expectation + DP. 
 int N,C;
 
 struct CandyBox {

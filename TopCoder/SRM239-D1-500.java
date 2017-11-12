@@ -6,6 +6,7 @@ import java.util.Queue;
 public class MathCounting {
 
 	//Standard problem to minimize a property about a number using BFS.
+    // BFS
 	public static void main(String[]args)throws Throwable {
 		System.out.println(count(1));
 	}

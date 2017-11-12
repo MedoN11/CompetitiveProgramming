@@ -3,6 +3,8 @@ import java.util.TreeSet;
 
 public class YankeeSwap {
 
+    
+ // Constructive - Greedy
 	static StringBuilder main = new StringBuilder();
 
 	public static void main(String[]args) throws Throwable {

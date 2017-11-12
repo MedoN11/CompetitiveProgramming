@@ -4,7 +4,9 @@ import java.util.Arrays;
 public class MagicalSpheres {
 
 
-	
+	// Math - Number theory
+    // Count prime in factorials
+    // Factorization in logN for small numbers
 	public static void main(String[]args)throws Throwable {
 		System.out.println(divideWork(3,3,50));
 	}
