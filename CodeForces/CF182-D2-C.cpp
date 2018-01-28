@@ -40,28 +40,9 @@ map<pii,ll> mp;
 int n,len,k;
 int block = 0;
 int arr[100005];
-// MO's Algorithm
-//simply solve it with MO's Algorithm. The queries are simply for all i + len — 1 < n, (i,i + len — 1).
-//
-//We are using MO's to extract the sum of K maximum negative elements (of absolute value) using two sets.
-//
-
-struct Query {
-	int L,R;
-	Query(int L,int R) { this->L = L , this->R = R; }
-};
-bool MO_CMP(Query &a, Query &b)
-{
-	if(a.L/block != b.L/block) {
-		return a.L/block < b.L/block;
-
-	}
-	else {
-		return a.R < b.R;
-	}
-}
 multiset<int> curr,out;
-ll sum = 0;
+// Sets
+// Maintain K maximums using two sets
 ll tmp = 0;
 void remove(int ind) {
 	if(arr[ind] >= 0) {
@@ -106,53 +87,22 @@ void add(int ind) {
 		}
 	}
 }
-ll pref[100005];
 ll getBest() {
-	sum = 0;
-	curr.clear(),out.clear();
-	mp.clear();
-	vector<Query> queries;
-	for (int i = 0 ; i + len - 1 < n ; ++i) {
-		queries.pb(Query(i,i + len - 1));
-	}
-	int currentL = 0; int currentR = -1, L,R;
-
-	sort(all(queries),MO_CMP);
+	curr.clear();
+	out.clear();
 	tmp = 0;
-	REP(i,queries) {
+	ll ans = 0;
+	for (int i = 0 ; i < n ; ++i) {
 
-		L = queries[i].L; R = queries[i].R;
-
-		while (currentR < R) {
-			currentR++;
-			add(currentR);
-
+		if(i - len >= 0) {
+			remove(i - len);
 		}
-		while (currentR > R) {
 
-			remove(currentR);
-			currentR--;
-		}
-		while (currentL < L) {
-			remove(currentL);
-			currentL++;
-
-		}
-		while (currentL > L) {
-			currentL--;
-			add(currentL);
-		}
-		mp[pii(L,R)] = abs(tmp);
-
-
+		add(i);
+		//cerr << tmp << "\n";
+		if(i >= len - 1) ans = max(ans,tmp);
 	}
-	ll ans = -(1LL << 52);
-	for (int i = 0 ; i + len - 1 < n ; ++i) {
-		ll bef = 0;
-		if(i > 0) bef = pref[i - 1];
-		ans = max(ans,mp[pii(i,i + len - 1)]);
 
-	}
 
 	return ans;
 }
@@ -161,19 +111,11 @@ int main() {
 	block = sqrt(n);
 	for (int i = 0 ; i < n ; ++i) {
 		scanf("%d",&arr[i]);
-		pref[i] = arr[i];
-		if(i > 0)
-			pref[i] += 1LL*pref[i - 1];
 	}
 	scanf("%d",&k);
 	ll ans = getBest();
 	for (int i = 0 ; i < n ; ++i) {
 		arr[i] = -arr[i];
-		pref[i] = arr[i];
-		if(i > 0)
-			pref[i] += 1LL*pref[i - 1];
 	}
 	cout << max(ans,getBest()) << "\n";
 }
-
-
