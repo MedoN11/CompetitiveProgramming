@@ -38,11 +38,13 @@ typedef pair<int,int> pii;
 #define F first
 #define S second
 #define MP make_pair
+// Just simulate the process
+// This theory is well known.
 ll n;
 int main() {
 	scanf("%lld",&n);
 	while(1) {
-		printf("%d ",n);
+		printf("%lld ",n);
 		if(n == 1) break;
 		if(n & 1) n = 1LL*n * 3LL + 1;
 		else n >>= 1;
