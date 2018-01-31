@@ -58,6 +58,7 @@ int main() {
 
 		int low  = ((1 << (8)) - 1)  & curr;
 		int high = (~((1 << 8) - 1)) & curr;
+                curr >= 8;
 
 		memset(ans,0,sizeof(ans));
 
