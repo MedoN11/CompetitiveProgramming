@@ -42,7 +42,8 @@ typedef pair<int,int> pii;
 const int maxn = 1e7 + 1;
 int n;
 int me[510];
-// 1 4 5 6 7 8 9
+// Bruteforce first cell, infer the others. Let's bruteforce the first element of the permutation, and we can see the rest of it is fixed to two possibilities.
+//So we solve for those for every start element. We get 2*n permtutations to verify.
 vector<int> nxt;
 bool seen[510];
 int c = 0;
@@ -108,4 +109,3 @@ int main() {
 	}
 
 }
-
