@@ -7,6 +7,9 @@ import java.util.StringTokenizer;
 
 public class DyckwordUniformer
 {
+	// The problem can be transformed to counting nCk(n,k)*nCk(n,m)*F(n-k,m-l)
+	// where F(n,k) counts number of binary matrices that each row or col contains at least a single 1
+	// to that subtask:
 	// First let's count all n x m binary matrices with a one in each row.
 	// The answer is simply (2^(m-1) - 1)^n
 	// now we are sure every row is filled, but coloumns might be empty
