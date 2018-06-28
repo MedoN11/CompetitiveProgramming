@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,43 +5,45 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
+import java.util.TreeMap;
+
 
 
 public class ELR {
 
-
-
 	public static void main(String[]args) throws Throwable {
 		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		TreeSet<Integer> set = new TreeSet();
-		Deque<Integer> q = new LinkedList();
-		int best = 1;
-		for (int i = 0 ; i < n ; ++i) {
-			int x = sc.nextInt();
-			if (!set.contains(x)) {
-				set.add(x);
-				q.addLast(x);
-			} else {
-				while (!q.isEmpty()) {
-					int y = q.pollFirst();
-					set.remove(y);
-					if (x == y) {
-						break;
-					}
-				}
-				set.add(x);
-				q.addLast(x);
-			}
-			best = Math.max(best, q.size());
+		PrintWriter out = new PrintWriter(System.out);
+		int n = sc.nextInt(),x = sc.nextInt();
+		Integer arr[] = new Integer[n];
+		for (int i = 0; i < n ; ++i) {
+			arr[i] = sc.nextInt();
 		}
-		System.out.println(best);
+		int ans = 0;
+		Arrays.sort(arr);
+		int l = 0, r = n - 1;
+		while (l <= r) {
+			if (l == r) {
+				++ans;
+				break;
+			}
+			if (arr[r] + arr[l] <= x) {
+				++l;
+				--r;
+				++ans;
+			} else {
+				++ans;
+				--r;
+			}
+		}
+		
+		out.println(ans);
+		out.flush();
+		out.close();
 	}
-
 
 	static class Scanner {
 		StringTokenizer st;
