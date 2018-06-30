@@ -15,6 +15,10 @@ public class ABC_009 {
 
 	// Greedy
 	// Build least lexographical greedy by bruteforcing the prefix
+        // Idea :  Fix prefix + binary function for lexographical min/max
+	// Build prefix greedily while any suffix can be constructed
+	// each time assign position i, the lowest(largest) possible, then run an OK //function to decide if you can put any suffix
+	// if so assign, and keep going
 
 	public static int count(char a[],char b[]) {
 		int cnt = 0;
