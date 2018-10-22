@@ -1,14 +1,13 @@
-
 #include <iostream>
 #include <cstdio>
 #include<list>
 #include<iomanip>
 #include<cmath>
-#include <random>
 #include<queue>
 #include <functional>
 #include<stdio.h>
 #include<assert.h>
+#include <deque>
 #include<stack>
 #include<sstream>
 #include <cstdlib>
@@ -20,80 +19,105 @@
 #include<memory.h>
 #include<string>
 #include<vector>
-#include <unordered_map>
 #include<numeric>
 using namespace std;
-#define ios std::ios_base::sync_with_stdio(false);
 #define ll  long long
 #define pb push_back
-#define fi(ss) freopen (ss,"r",stdin)
-#define fo(ss) freopen (ss,"w",stdout)
 #define sz(v)               ((int)((v).size()))
 #define all(x)          (x).begin(),(x).end()
 #define REP(i, v)       for(int i=0;i<sz(v);i++)
-#define lp(i,n) for(int i = 0 ; i < n ; ++i)
-#define hash ___hash
-#define next ___next
-#define prev ___prev
-#define left ___left
-typedef pair<int,ll> pii;
-#define F second.first
-#define S second.second
-#define MP make_pair
-const int maxn = 200005;
-const int N = 200005;
-int lp[N + 1];
-int phi[N + 1];
-vector<int> pr;
+typedef pair<int,int> pii;
+typedef pair<pii,int> en;
+#define ios std::ios_base::sync_with_stdio(false);
+using namespace std;
+const int maxn = 1005;
+int n,m;
+char grid[maxn][maxn];
+int dis[maxn][maxn];
 
-// Number Theory
-// let's fix the current divisor to be d
-// for multiple j of d, the answer contributed by d is d * number of coprimes between d / i and numbers from 1 to d / i
-// otherwise d would not be the gcd
-// for line #3 we use phi function to calculate number of coprimes quickly
-void calc_sieve()
-{
-	phi[1] = 1;
-	for (int i = 2; i <= N; ++i)
-	{
-		if (lp[i] == 0)
-		{
-			lp[i] = i;
-			phi[i] = i - 1;
-			pr.push_back(i);
-		}
-		else
-		{
-			if (lp[i] == lp[i / lp[i]])
-				phi[i] = phi[i / lp[i]] * lp[i];
-			else
-				phi[i] = phi[i / lp[i]] * (lp[i] - 1);
-		}
-		for (int j = 0; j < (int)pr.size() && pr[j] <= lp[i] && i * pr[j] <= N; ++j)
-			lp[i * pr[j]] = pr[j];
+// 0 - 1 BFS using a deque
+// The graph costs are 0 or 1 -- special graph
+bool valid(pii s) {
+	return s.first >= 0 && s.first < n && s.second >= 0 && s.second < m;
+}
+pii transform(pii s,int x) {
+
+	if (x == 0) {
+		return pii(s.first - 1,s.second);
+	}
+	if (x == 1) {
+		return pii(s.first - 1,s.second + 1);
+	}
+	if (x == 7) {
+		return pii(s.first - 1,s.second - 1);
+	}
+	if (x == 2) {
+		return pii(s.first,s.second + 1);
+	}
+	if (x == 6) {
+		return pii(s.first,s.second - 1);
+	}
+	if (x == 5) {
+		return pii(s.first + 1,s.second - 1);
+	}
+	if (x == 4) {
+		return pii(s.first + 1,s.second);
+	}
+	if (x == 3) {
+		return pii(s.first + 1,s.second + 1);
 	}
 }
+bool seen[maxn][maxn];
+int solve(pii s,pii t) {
+	queue<pair<int,pii> > q;
+	memset(seen,0,sizeof(seen));
+	deque<pair<int,pii> > deq;
+	deq.push_back(make_pair(0,s));
+	while (!deq.empty()) {
+		pair<int,pii> r = deq.front(); deq.pop_front();
+		pii p = r.second;
+		int i = p.first, j = p.second;
+		if (seen[i][j]) {
+			continue;
+		}
+		seen[i][j] = true;
+		if (t.first == i && t.second == j) {
+			return r.first;
+		}
+		pii nxt = transform(p,grid[i][j] - '0');
+		if (valid(nxt)) {
+			deq.push_front(make_pair(r.first,nxt));
+		}
+		for (int k = 0 ; k <= 7 ; ++k) {
+			nxt = transform(p,k);
+			if (valid(nxt)) {
+				deq.push_back(make_pair(r.first + 1,nxt));
+			}
+		}
 
-ll dp[maxn];
+	}
+	assert(false);
+
+}
 int main() {
+	ios
+	cin >> n >> m;
 
-	calc_sieve();
-
-	for (int i = 2 ; i < N ; ++i) {
-		for (int j = i * 2 ; j < N ; j += i) {
-			int cur = j / i;
-			dp[j] += i*1LL*phi[cur];
+	string str;
+	for (int i = 0 ; i < n ; ++i) {
+		cin >> str;
+		for (int j = 0 ; j < m ; ++j) {
+			grid[i][j] = str[j];
 		}
-		dp[i] += phi[i];
-		dp[i] += dp[i - 1];
-
 	}
-	int n;
-	while(scanf("%d",&n) && n != 0) {
-
-		printf("%lld\n",dp[n]);
+	int q;
+	cin >> q;
+	while (q--) {
+		pair<int,int> src,dest;
+		cin >> src.first >> src.second >> dest.first >> dest.second;
+		--src.first; --src.second; --dest.first; --dest.second;
+		cout << solve(src,dest) << "\n";
 	}
+
 
 }
-
-
