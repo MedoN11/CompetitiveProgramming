@@ -35,6 +35,8 @@ using namespace std;
 #define ll  long long
 using namespace std;
 // Polynomial hashing
+// Collision prob n / m^2
+// by CRT, if hash modulo m1,m2,m3, it makes capacity m1*m2*m3
 struct Hasher {
 	// Assumes that all strings are lower case
 	int base,m1,before,after;
